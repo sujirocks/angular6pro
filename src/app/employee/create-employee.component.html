@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+                    <div class="card-header"><strong>Create Employee</strong></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" formControlName="fullName"
+                                placeholder="Enter Full Name">
+                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group mb-4">
+                            <label>Email</label>
+                            <input type="text" class="form-control" formControlName="email" placeholder="Enter Email">
+                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <form formGroupName="skills" class="border p-3 rounded">
+                            <label class="fieldset">Skill Region</label>
+                            <div class="form-group">
+                                <label>Skills</label>
+                                <input type="text" class="form-control" formControlName="skillName" placeholder="Enter Skills">
+                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            </div>
+                            <div class="form-group">
+                                <label>Years of Experience</label>
+                                <input type="text" class="form-control" formControlName="yoExp" placeholder="Enter Year of Experience">
+                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <div class="float-right">
+                            <button type="submit" class="btn btn-primary mr-2">Save</button>
+                            <button type="button" class="btn btn-primary" (click)="loadData()">Load</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
