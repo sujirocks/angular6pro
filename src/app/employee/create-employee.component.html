@@ -6,33 +6,47 @@
                     <div class="card-header"><strong>Create Employee</strong></div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" class="form-control" formControlName="fullName"
-                                placeholder="Enter Full Name">
-                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            <label for="fullName">Full Name</label>
+                            <input type="text" class="form-control" formControlName="fullName" id="fullName" name="fullName" 
+                             placeholder="Enter Full Name" [ngClass]="{'is-invalid': ((employeeForm.get('fullName').errors?.required) &&
+                             (employeeForm.get('fullName').touched || employeeForm.get('fullName').dirty))}">
+                            <span class="invalid-feedback">
+                                <span id="emailHelp" *ngIf="employeeForm.get('fullName').errors?.required">Full Name is required</span>
+                                <!-- <span id="emailHelp" *ngIf="employeeForm.get('fullName').errors.minlength && employeeForm.get('fullName').errors.maxlength">Full Name must be greater than 2 chanracters and 
+                                    less than 8 characters.
+                                </span> -->
+                            </span>
+
                         </div>
                         <div class="form-group mb-4">
                             <label>Email</label>
-                            <input type="text" class="form-control" formControlName="email" placeholder="Enter Email">
-                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            <input type="text" class="form-control" formControlName="email" placeholder="Enter Email" 
+                            [ngClass]="{'is-invalid': ((employeeForm.get('email').errors?.required) &&
+                             (employeeForm.get('email').touched || employeeForm.get('email').dirty))}">
+                             <span class="invalid-feedback">
+                            <span id="emailHelp" *ngIf="employeeForm.get('email').errors?.required">Email is required</span>
+                            <span id="emailHelp" *ngIf="employeeForm.get('email').errors?.emailDomain">Email domain must be tradesocio.com</span>
+                        </span>
                         </div>
                         <form formGroupName="skills" class="border p-3 rounded">
                             <label class="fieldset">Skill Region</label>
                             <div class="form-group">
                                 <label>Skills</label>
-                                <input type="text" class="form-control" formControlName="skillName" placeholder="Enter Skills">
+                                <input type="text" class="form-control" formControlName="skillName"
+                                    placeholder="Enter Skills">
                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group">
                                 <label>Years of Experience</label>
-                                <input type="text" class="form-control" formControlName="yoExp" placeholder="Enter Year of Experience">
+                                <input type="text" class="form-control" formControlName="yoExp"
+                                    placeholder="Enter Year of Experience">
                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                         </form>
                     </div>
                     <div class="card-footer clearfix">
                         <div class="float-right">
-                            <button type="submit" class="btn btn-primary mr-2">Save</button>
+                            <button type="submit" class="btn btn-primary mr-2" [ngClass]="{disabled : disableSave }">Save</button>
                             <button type="button" class="btn btn-primary" (click)="loadData()">Load</button>
                         </div>
                     </div>

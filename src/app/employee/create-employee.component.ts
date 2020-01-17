@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { format } from 'url';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
@@ -8,6 +7,30 @@ import { format } from 'url';
 })
 export class CreateEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
+  disableSave = false;
+  validationMessages = {
+    'fullName' : {
+      'required': 'Full name is required',
+      'minlength': 'Full name must be greater than 2 characters',
+      'maxlength': 'Full name must be less than 10 characters'
+    },
+    'email': {
+      'required': 'Email is required'
+    },
+    'skillName': {
+      'required': 'Skill Name is required'
+    },
+    'yoExp': {
+      'required': 'Year of experience is required'
+    }
+  };
+
+  formErrors = {
+    'fullName': '',
+    'email': '',
+    'skillName': '',
+    'yoExp': ''
+  };
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -23,13 +46,17 @@ export class CreateEmployeeComponent implements OnInit {
 
     // Explictly implement reactive form with FormBuilder
       this.employeeForm = this.fb.group({
-        fullName: [''],
-        email: [''],
+        fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+        email: ['', [Validators.required, emailDomain('tradesocio.com')]],
         skills: this.fb.group({
-          skillName: [''],
-          yoExp: ['']
+          skillName: ['', Validators.required],
+          yoExp: ['', Validators.required]
         })
       });
+
+      // this.employeeForm.get('fullName').valueChanges.subscribe(value => {
+      //   console.log(value);
+      // });
   }
   saveEmployee(): void {
     console.log(this.employeeForm.value);
@@ -46,5 +73,18 @@ export class CreateEmployeeComponent implements OnInit {
       });
       console.log(this.employeeForm.value);
     }
+    this.employeeForm.disable();
+    this.disableSave = !this.disableSave;
   }
+}
+function emailDomain(domainName: string) {
+  return (control: AbstractControl): { [ key: string ]: any} | null => {
+  const email: string = control.value;
+  const domain = email.substring(email.lastIndexOf('@') + 1);
+  if (email === '' || domain.toLowerCase() === domainName.toLowerCase()) {
+    return null;
+  } else {
+    return { 'emailDomain': true };
+  }
+};
 }
